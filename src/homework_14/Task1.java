@@ -16,16 +16,15 @@ public class Task1 {
 
     public static int getEvenSum(int[] arr){
         if (arr == null || arr.length == 0) {
-            return 0;
-        } else {
+            return 0; // В блоке if есть return. Т.е. если мы зашли в if, после вызова return выполнение кода дальше не пойдет -> можно без else
+        }
             int sum = 0;
             for (int i = 0; i < arr.length; i++) {
                 if (arr[i] % 2 == 0) {
                     sum = sum + arr[i];
                 }
             }
-            return sum;
+        return sum;
         }
 
-    }
-} // End class
+    } // End class
