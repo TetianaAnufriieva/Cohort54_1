@@ -1,29 +1,28 @@
 package homework_15;
 
 public class Chair {
-    double seatDepth;
-    double seatWidth;
-    double seatHeight;
-    double depth;
-    double width;
-    double height;
 
-    public Chair(String name, String color, String material, double weight, double depth,
-                 double width, double height, double seatDepth, double seatWidth,
-                 double seatHeight) {
+        String color;
+        String material;
+        double length;
+        double width;
+        double height;
+        String isSoft;
 
-        this.seatDepth = seatDepth;
-        this.seatWidth = seatWidth;
-        this.seatHeight = seatHeight;
-        this.depth = depth;
-        this.width = width;
-        this.height = height;
+        public Chair (String material, String color, double length, double width, double height, String isSoft){
+            this.color = color;
+            this.material = material;
+            this.length = length;
+            this.width = width;
+            this.height = height;
+            this.isSoft = isSoft;
+        }
 
-    }
+        public void info(){
+            System.out.printf("Материал, из которого изготовлен стул - %s, цвет - %s, размеры: %.2f x %.2f x %.2f cm, он мягкий - %s \n", material, color, length, width, height, isSoft);
+        }
 
-    public void applying() {
-        System.out.println("На стуле сидят");
-    }
-
-
+        public void sit() {
+            System.out.println("Вы можете присесть на стул");
+        }
 }
