@@ -1,11 +1,24 @@
-package lesson_16;
+package lesson_17;
 
-public class MagicArray {
+import lesson_16.MagicArray;
+
+public class MagicArray17 {
     int[] array;
     int cursor; // присвоено значение по умолчание - 0;
 
-    public MagicArray() {
+    public MagicArray17() {
         array = new int[10];
+    }
+
+    public MagicArray17(int[] ints) {
+
+        if (ints != null) {
+            this.array = new int[ints.length * 2];
+            addAll(ints);
+        } else {
+            this.array = new int[10];
+        }
+
     }
 
     // Добавление в массив одного элемента
@@ -58,48 +71,6 @@ public class MagicArray {
         }
     }
 
-    // [Homework16] Поиск элемента по значению indexOf(int value). Вернуть индекс, если в массиве элемент с таким значением.
-    int indexOf(int value){
-
-        for (int i = 0; i < cursor;  i++){
-           if (array[i] == value) {
-                return i;
-           }
-        }
-        return -1; // значение в массиве не найдено
-    }
-
-    // [Homework16] Возвращение значения по индексу get(int index).
-    int get(int index){
-        if (index < 0) {
-            // Индекс не валидный.
-            return Integer.MIN_VALUE; // Todo переписать потом
-        }
-        for (int i = 0; i < cursor; i++){
-            if (i == index){
-                return array[i];
-            }
-        }
-        return Integer.MIN_VALUE; // Todo переписать потом
-        // index в массиве не найден
-    }
-
-    // [Homework16] Удаление элемента по значению boolean removeByValue(int value). Если значение есть - удалит элемент и вернет true.
-
-    boolean removeByValue(int value){
-        for (int i = 0; i < cursor; i++) {
-            if (array[i] == value) {
-                for (int j = i; j < cursor - 1; j++) { // Смещение элементов влево
-                    array[j] = array[j + 1];
-                }
-                cursor--;
-                return true;
-            }
-        }
-        return false;
-    }
-
-
     // Удаление элемента по индексу
     int remove(int index) {
         /*
@@ -138,6 +109,86 @@ public class MagicArray {
         return cursor;
     }
 
+    // Возвращает значение по индексу
+    int get(int index) {
+        if (index >=0 && index < cursor) {
+            // Валидный индекс
+            return array[index];
+        }
+
+        // Обработка не корректного индекса
+        return Integer.MIN_VALUE; // хорошего решения нет
+        //TODO Поправить обработку некорректного индекса
+    }
+
+    // [10, 100, 44, 100, 453, 100, 34]
+    // Поиск первого вхождения элемента по значению
+    // Возвращает индекс элемента. Если значение не найдено возвращает -1 (не существующий индекс для любого массива)
+    int indexOf(int value) {
+        for (int i = 0; i < cursor; i++) {
+            if(array[i] == value) {
+                // нашли
+                return i;
+            }
+        }
+        // Перебрали все элементы. Не нашли ни одного совпадения.
+        return -1;
+    }
+
+    // Поиск последнего вхождения элемента по значению
+    int lastIndexOf(int value) {
+        //Todo homework
+        return -1;
+    }
+
+    //  возвращает все значения в виде обычного массива
+    int[] toArray() {
+        // Todo Homework
+        return null;
+    }
+
+    // Удаление элемента по значению
+    boolean removeByValue(int value) {
+        /*
+        1. Есть ли у нас такой элемент в массиве?
+        2. Если нет - то вернуть false
+        3. Если есть - удалить этот элемент
+        4. Вернуть true после удаление.
+         */
+
+        // 1.
+        int index = indexOf(value);
+
+        // 2.Значение не найдено. Удалять нечего.
+        if (index == -1) return false;
+
+        // Переиспользую существующий метод удаления элемента по индексу
+        remove(index);
+        return true;
+    }
+
+    // Замена значения по индексу - возвращает старое значение
+    int set(int index, int newValue) {
+        /*
+        1. Валидация индекса 0...cursor
+        2. Вытащить старое значение - запомнить
+        3. Записать новое значение
+        4. Вернуть старое
+         */
+        // 1
+        if (index < 0 || index >= cursor) {
+            // Индекс не валидный
+            return Integer.MIN_VALUE;
+            // Todo поправить обработку не валидности индекса
+        }
+
+        int oldValue = array[index];
+        array[index] = newValue;
+        return oldValue;
+    }
+
+
+
     // Возвращает строковое представление массива
     // [100, 200, 500]
     public String toString() {
@@ -166,8 +217,17 @@ public class MagicArray {
 3. Возвращать строковое представление массива (какие элементы там есть) ++
 4. Добавляем в массив сразу несколько значений ++
 5. Текущее количество элементов в массиве ++
-6. Возвращает значение по индексу get(int index) ??
+6. Возвращает значение по индексу get(int index) ++
 7. Удалять элемент по индексу (Если индекс есть - удалит элемент - вернет удаленное значение) ++
-8. Поиск элемента по значению indexOf(int value) (определить есть ли в массиве элемент с таким значением) ??
-9. Удалять элемент по значению boolean removeByValue(int value) (Если значение есть - удалит элемент - вернет true, если такое значение было) ++
+8. Поиск элемента по значению indexOf(int value) (определить есть ли в массиве элемент с таким значением) ++
+9. Удалять элемент по значению boolean removeByValue(int value)
+(Если значение есть - удалит элемент - вернет true, если такое значение было) ++
+
+___
+
+10. Поиск последнего вхождения по значению lastIndexOf -- HW
+11. Замена значения по индексу (есть индекс и новое значение) - возвращает старое значение ++
+12. Конструктор, который принимает обычный массив и создает MagicArray с такими же значениями ++
+13. Метод, который возвращает все значения в виде обычного массива - HW
+
  */
