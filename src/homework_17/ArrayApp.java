@@ -1,5 +1,7 @@
 package homework_17;
 
+import java.util.Arrays;
+
 public class ArrayApp {
     public static void main(String[] args) {
         int[] ints = {10, 20, 50, -25, 35, 50, 45, 100, 50, -1, 150};
@@ -9,6 +11,8 @@ public class ArrayApp {
 
         System.out.println("lastIndexOf (50): " + magicArray.lastIndexOf(50));
 
-        System.out.println(magicArray.toArray());
+        System.out.println(Arrays.toString(magicArray.toArray()));
+
+
     }
 }

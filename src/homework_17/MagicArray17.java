@@ -35,7 +35,7 @@ public class MagicArray17 {
     }
 
     // Динамическое расширение массива
-    public void expandArray() {
+    private void expandArray() {
         System.out.println("Расширяем массив! cursor: " + cursor);
         /*
         1. Создать массив бОльшего размера (в 2 раза больше)
@@ -151,10 +151,8 @@ public class MagicArray17 {
         if (cursor == 0){
             return null;
         }
-        System.out.print("[");
         for (int i = 0; i < cursor; i++) {
             result[i] = array[i];
-            System.out.print(result[i] + ((i < cursor - 1) ? ", " : "]"));
         }
         return result;
     }
