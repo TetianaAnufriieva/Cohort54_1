@@ -42,36 +42,43 @@ public class Dog {
             System.out.printf("The dog %s is jumping on the height %.2f cm\n", name, jumpHeight );
         }
 
-    public void     train(){
-        if ((jumpHeight + 10) > maxJumpHeight) {
-            System.out.printf("The dog %s has reached its maximum jump height of %.2f cm. No more training possible.\n", name, maxJumpHeight);
-        } else{
-            jumpHeight += 10;
-            System.out.printf("The dog %s is training. New jump height: %.2f cm.\n", name, jumpHeight);
+    public void train() {
+        if (jumpHeight < maxJumpHeight) {
+            double increaseValue;
+            if ((maxJumpHeight - jumpHeight) < 10) {
+                increaseValue = maxJumpHeight - jumpHeight;
+                jumpHeight += increaseValue;
+            } else {
+                jumpHeight += 10;
             }
+            System.out.printf("The dog %s is training. New jump height: %.2f cm.\n", name, jumpHeight);
+        } else{
+            System.out.printf("The dog %s has already reached its maximum jump height of %.2f cm.\n", name, maxJumpHeight);
+        }
     }
 
-    public void jumpBarrier(double barrierHeight){
-        if (barrierHeight <= 0) {
-            System.out.println("Barrier height must be bigger than zero.");
-            return;
-        }
-        System.out.printf("Trying to jump over a barrier of height: %.2f cm.\n", barrierHeight);
-        if (jumpHeight >=  barrierHeight){
-            System.out.printf("The dog %s easily jumped over the barrier!\n", name);
-            jump();
-        } else {
-            System.out.printf("The dog %s cannot jump over the barrier right now. Training required.\n", name);
-            while (jumpHeight < barrierHeight && jumpHeight + 10 <= maxJumpHeight){
-                train();
+        public void jumpBarrier ( double barrierHeight){
+            if (barrierHeight <= 0) {
+                System.out.println("Barrier height must be bigger than zero.");
+                return;
             }
-            if (jumpHeight >=  barrierHeight){
-                System.out.printf("The dog %s successfully jumped over the barrier after training!\n", name);
+            System.out.printf("Trying to jump over a barrier of height: %.2f cm.\n", barrierHeight);
+            if (jumpHeight >= barrierHeight) {
+                System.out.printf("The dog %s easily jumped over the barrier!\n", name);
+                jump();
+            } else if (maxJumpHeight >= barrierHeight) {
+                System.out.printf("The dog %s cannot jump over the barrier right now. Training required.\n", name);
+                while (jumpHeight < barrierHeight && jumpHeight < maxJumpHeight) {
+                    train();
+                }
+                if (jumpHeight >= barrierHeight) {
+                    System.out.printf("The dog %s successfully jumped over the barrier after training!\n", name);
+                } else {
+                    System.out.printf("The dog %s trained but still cannot jump over the barrier of height %.2f cm.\n", name, barrierHeight);
+                }
             } else {
                 System.out.printf("The dog %s cannot jump over the barrier of height %.2f cm even after training.\n", name, barrierHeight);
             }
 
         }
-
     }
-}
