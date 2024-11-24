@@ -81,4 +81,8 @@ public class Dog {
             }
 
         }
+
+    public String toString() {
+        return "DogName= " + name + ", jumpHeight= " + jumpHeight;
+    }
     }

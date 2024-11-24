@@ -35,6 +35,9 @@ public class DogApp {
         }
         System.out.println("******************\n");
         System.out.println("The number of barriers each dog managed to overcome\n" + Arrays.toString(result));
+        System.out.println(Arrays.toString(dogs));
+
+
 
 
     }
