@@ -52,22 +52,26 @@ public class Autobus {
      */
     public boolean dropPassenger(Passenger passenger){
        if (!isPassengerInBus(passenger)){
-           System.out.printf("Пассажира с таким id = %d в автобусе с id = %d не сущесвует", passenger.getId(), this.id);
+           System.out.printf("Пассажира с таким id = %d в автобусе с id = %d не сущесвует\n", passenger.getId(), this.id);
            return false;
        }
 
-       Passenger[] updatePassenders = new Passenger[capacity];
-       int index = 0;
+       int passengerToDropFound = 0;
 
-       for(int i = 0; i < countPassengers; i++){
-           if (passengers[i].getId() != passenger.getId()) {
-               updatePassenders[index] = passengers[i];
-               index++;
+       for(int i = 0; i < countPassengers - 1; i++){
+           if (passengers[i].getId() == passenger.getId()) {
+               passengerToDropFound = 1;
            }
+
+           passengers[i] = passengers[i + passengerToDropFound];
        }
-        countPassengers--;
-        System.out.printf("Пассажир с id = %d был высажен из автобуса с id = %d\n", passenger.getId(), this.id);
-        System.out.println(Arrays.toString(updatePassenders));
+
+       passengers[countPassengers - 1] = null;
+
+       countPassengers--;
+       System.out.printf("Пассажир с id = %d был высажен из автобуса с id = %d\n", passenger.getId(), this.id);
+       System.out.println(Arrays.toString(passengers));
+
         return true;
     }
 
