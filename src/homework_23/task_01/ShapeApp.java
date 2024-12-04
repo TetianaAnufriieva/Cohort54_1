@@ -32,6 +32,13 @@ public class ShapeApp {
 //        System.out.println(figureCircle.calculateArea());
 //        System.out.println(figureRectangle.calculateArea());
 //        System.out.println(figureTriangle.calculateArea());
+// object instanceof ClassOrInterface
+        if (figureCircle instanceof Shape){
+            System.out.println("+1");
+        }
+        else {
+            System.out.println("-1");
+        }
 
     }
 
