@@ -11,6 +11,7 @@ public class Account implements PaymentSystem{
         this.accountName = accountName;
     }
 
+    @Override
     public String getAccountName() {
         return accountName;
     }
@@ -46,7 +47,7 @@ public class Account implements PaymentSystem{
         if (amount <= balance){
             withdrawMoney(amount);
             targetAccount.depositTransfer(amount);
-            System.out.printf("Money in the amount of %.2f %s was transferred from %s to the target account = %s", amount, currency, getAccountName(), targetAccount);
+            System.out.printf("Money in the amount of %.2f %s was transferred from %s to the target account = %s", amount, currency, getAccountName(), targetAccount.getAccountName());
         } else {
             System.out.println("No money");
         }

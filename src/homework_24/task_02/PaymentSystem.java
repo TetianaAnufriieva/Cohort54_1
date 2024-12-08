@@ -6,4 +6,5 @@ public interface PaymentSystem {
     void depositTransfer(double amount); // поступление денег на счет
     double checkBalance(); // остаток на счете
     void transferMoney(PaymentSystem targetAccount, double amount); // перевод средств на другой счет
+    String getAccountName();
 }

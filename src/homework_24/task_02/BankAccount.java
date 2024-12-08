@@ -5,6 +5,7 @@ public class BankAccount extends Account {
     public BankAccount(double balance, String currency, String accountName) {
         super(balance, currency, accountName);
     }
+
 }
 
 
