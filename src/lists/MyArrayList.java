@@ -1,24 +1,18 @@
-/*
-Task 1
-Опционально
-Параметризовать наш класс "Magic Array", добавив в него обобщение типа (generic).
-Опционально
-Реализовать в классе параметризованный интерфейс MyList (код интерфейса прикреплен к уроку)
- */
+package lists;
 
-package homework_25.task_01;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
-public class MagicArrayGen <T> {
+public class MyArrayList<T> implements MyList<T> {
     private T[] array;
     private int cursor; // присвоено значение по умолчание - 0;
 
-    @SuppressWarnings("unchecked")
-    public MagicArrayGen() {
+    public MyArrayList() {
         array = (T[]) new Object[10];
     }
 
     @SuppressWarnings("unchecked")
-    public MagicArrayGen(T[] ints) {
+    public MyArrayList(T[] ints) {
 
         if (ints != null) {
             this.array = (T[]) new Object[ints.length * 2];
@@ -29,6 +23,8 @@ public class MagicArrayGen <T> {
 
     }
 
+
+    @Override
     // Добавление в массив одного элемента
     public void add(T value) {
 
@@ -55,7 +51,7 @@ public class MagicArrayGen <T> {
          */
 
         // 1.
-        T[] newArray = (T[])new Object[array.length * 2];
+        T[] newArray = (T[]) new Object[array.length * 2];
 
         // 2
         for (int i = 0; i < cursor; i++) {
@@ -67,7 +63,8 @@ public class MagicArrayGen <T> {
         System.out.println("Расширение массива завершено");
     }
 
-    @SuppressWarnings("unchecked")
+
+    @Override
     public void addAll(T... values) {
         // с values я могу обращаться точно также, как со ссылкой на массив int
 //        System.out.println("Мы приняли несколько int-ов. А именно: " + values.length);
@@ -78,7 +75,7 @@ public class MagicArrayGen <T> {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     // Удаление элемента по индексу
     public T remove(int index) {
         /*
@@ -92,7 +89,7 @@ public class MagicArrayGen <T> {
 
         if (index < 0 || index >= cursor) {
             // Индекс не валидный. Ничего в массиве не трогаем
-            return null; // Todo переписать потом
+            return null;
         }
 
         // 2. Запомнить значение
@@ -110,6 +107,7 @@ public class MagicArrayGen <T> {
     }
 
 
+    @Override
     // Текущее количество элементов в массиве
     public int size() {
         return cursor;
@@ -123,10 +121,11 @@ public class MagicArrayGen <T> {
         }
 
         // Обработка не корректного индекса
-        return null; // хорошего решения нет
-        //TODO Поправить обработку некорректного индекса
+        return null;
+
     }
 
+    @Override
     // [10, 100, 44, 100, 453, 100, 34]
     // Поиск первого вхождения элемента по значению
     // Возвращает индекс элемента. Если значение не найдено возвращает -1 (не существующий индекс для любого массива)
@@ -141,6 +140,7 @@ public class MagicArrayGen <T> {
         return -1;
     }
 
+    @Override
     // Поиск последнего вхождения элемента по значению
     public int lastIndexOf(T value) {
 
@@ -153,20 +153,37 @@ public class MagicArrayGen <T> {
         return -1;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     //  возвращает все значения в виде обычного массива
     public T[] toArray() {
-        T[] result = (T[]) new Object[cursor];
+//        T[] result = (T[]) new Object[cursor];
+
+        if (cursor == 0) {
+            return null;
+        }
+
+        // Взять какой-то объект из моего массива и узнать на стадии выполнения программы тип этого объекта
+        // И потом, используя рефлексию, я могу создать массив этого типа данных
+
+        Class<T> clazz = (Class<T>) array[0].getClass();
+        System.out.println("clazz: " + clazz);
+
+        // Создать массив такого же типа, как 0-й элемент
+        T[] result = (T[]) Array.newInstance(clazz, cursor);
 
         for (int i = 0; i < cursor; i++) {
             result[i] = array[i];
         }
 
+        System.out.println("result: " + Arrays.toString(result));
+
         return result;
     }
 
+    @Override
     // Удаление элемента по значению
-    public boolean removeByValue(T value) {
+    public boolean remove(T value) {
         /*
         1. Есть ли у нас такой элемент в массиве?
         2. Если нет - то вернуть false
@@ -185,8 +202,9 @@ public class MagicArrayGen <T> {
         return true;
     }
 
+    @Override
     // Замена значения по индексу - возвращает старое значение
-    public T set(int index, T newValue) {
+    public void set(int index, T newValue) {
         /*
         1. Валидация индекса 0...cursor
         2. Вытащить старое значение - запомнить
@@ -196,16 +214,39 @@ public class MagicArrayGen <T> {
         // 1
         if (index < 0 || index >= cursor) {
             // Индекс не валидный
-            return null;
-            // Todo поправить обработку не валидности индекса
+            return;
+
         }
 
         T oldValue = array[index];
         array[index] = newValue;
-        return oldValue;
+//        return oldValue;
     }
 
 
+    @Override
+    public boolean contains(T value) {
+        // -1 - элемента нет, indexOf 0 и больше? - элемент содержится
+        return indexOf(value) >= 0;
+
+//        int index = indexOf(value);
+//        if (index >= 0 ) {
+//            // Элемент найден
+//            return true;
+//        }
+//        else {
+//            // index меньше нуля (минус 1).
+////            Значит такого значения нет
+//            return false;
+//        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return cursor == 0;
+    }
+
+    @Override
     // Возвращает строковое представление массива
     // [100, 200, 500]
     public String toString() {
