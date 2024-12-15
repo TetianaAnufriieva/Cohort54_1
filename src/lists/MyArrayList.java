@@ -2,6 +2,7 @@ package lists;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class MyArrayList<T> implements MyList<T> {
     private T[] array;
@@ -266,6 +267,40 @@ public class MyArrayList<T> implements MyList<T> {
         return result;
     }
 
+    /*
+    Интерфейс Iterable - означает, что объекты этого класса можно перебирать (итерировать)
+    Он метод Iterator<T> iterator() - возвращает итератор для коллекции
+
+    Интерфейс Iterator - собственно итератор, который позволяет обходить коллекцию
+    boolean hasNext() - есть ли следующий элемент
+    T next() - возвращает следующий элемент - не обязательный, удаляет последний возвращенный элемент
+    void remove() -
+     */
+    @Override
+    public Iterator<T> iterator() {
+        return new MyIterator();
+    }
+
+    private class MyIterator implements Iterator<T>{
+
+        private int currentIndex = 0;
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < cursor;
+        }
+
+        @Override
+        public T next() {
+            return array[currentIndex++];
+
+//            return get(currentIndex++);
+
+//            T value = array[currentIndex];
+//            currentIndex++;
+//            return value;
+        }
+    }
 }
 
 
