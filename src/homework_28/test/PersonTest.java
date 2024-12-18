@@ -87,7 +87,7 @@ public class PersonTest {
     @ParameterizedTest
     @MethodSource("invalidPasswordData")
     void testInvalidPasswordSet(String invalidPassword){
-        person.setEmail(invalidPassword);
+        person.setPassword(invalidPassword);
         assertNotEquals(invalidPassword, person.getPassword());
         assertEquals(startPassword, person.getPassword());
 
@@ -98,11 +98,11 @@ public class PersonTest {
         return Stream.of("a",
                 "abc",
                 "abcD",
-                "?Abcd1*$E",
+                "Abcd1E©2",
                 "1234",
                 "!%$@&*()[]",
                 "ABCD",
-                "AbCdE!%4",
+                "AbCdE      §«",
                 "AbCdE1434");
     }
 
