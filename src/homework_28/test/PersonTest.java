@@ -19,8 +19,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonTest {
 
@@ -88,6 +87,7 @@ public class PersonTest {
     @MethodSource("invalidPasswordData")
     void testInvalidPasswordSet(String invalidPassword){
         person.setPassword(invalidPassword);
+        assertNotNull(person.getPassword());
         assertNotEquals(invalidPassword, person.getPassword());
         assertEquals(startPassword, person.getPassword());
 
@@ -96,14 +96,11 @@ public class PersonTest {
     static Stream<String> invalidPasswordData() {
        //"!%$@&*()[]"
         return Stream.of("a",
-                "abc",
-                "abcD",
-                "Abcd1E©2",
-                "1234",
-                "!%$@&*()[]",
-                "ABCD",
-                "AbCdE      §«",
-                "AbCdE1434");
+                "qwer!1Q", //короткий
+                "ERYTYRTYT%555", // без маленькой буквы
+                "48asd*dfg", // без большой буквы
+                "WeR(reF[D", // без цифры
+                "5TgdfgfRE50"); // без спец.символа
     }
 
 }
