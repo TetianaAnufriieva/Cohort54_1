@@ -1,9 +1,10 @@
-package consultation_15.bookstore.main.controller;
+package consultation_16.bookstore.main.controller;
 
-import consultation_15.bookstore.main.model.Book;
-import consultation_15.bookstore.main.repository.BookRepository;
-import consultation_15.bookstore.main.service.BookService;
+import consultation_16.bookstore.main.model.Book;
+import consultation_16.bookstore.main.repository.BookRepository;
+import consultation_16.bookstore.main.service.BookService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class BookController {
@@ -47,6 +48,7 @@ public class BookController {
                     break;
                 case 5:
                     System.out.println("Print all books");
+                    printAllBooks();
                     break;
                 case 6:
                     System.exit(0);
@@ -73,6 +75,18 @@ public class BookController {
         // Add book from data
         Book book = new Book(title, author, year, price);
         bookService.addBook(book);
+    }
+
+    private void printAllBooks() {
+        List<Book> allBooks = bookService.getAllBooks();
+
+        if (!allBooks.isEmpty()) {
+            for (Book book : allBooks) {
+                System.out.println(book);
+            }
+        } else {
+            System.out.println("No books found.");
+        }
     }
 
 
