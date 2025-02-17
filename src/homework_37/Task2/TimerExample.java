@@ -116,7 +116,7 @@ public class TimerExample {
         Random random = new Random();
         while (removed < 1000 && !lists.isEmpty()){
             int value = random.nextInt(10001);
-            if (lists.remove((Integer.valueOf(value)))) {
+                if (lists.remove((Integer.valueOf(value)))) {
                 removed++;
             }
 
