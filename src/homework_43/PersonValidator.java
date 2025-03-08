@@ -55,10 +55,12 @@ public class PersonValidator {
         }
 
         // Если хотя бы в одной переменной останется значение false,
-        // то весь пароль не будет признан валидным, выбрасываем исключение
-        if (!result[0] || !result[1] || !result[2] || !result[3]) {
-            throw new PasswordValidateException("Digit, uppercase, lowercase or special symbol error");
-        }
+        // то весь пароль не будет признана валидным = из метода вернется false
+//        return  result[0] && result[1] && result[2] && result[3];
+        if (!result[0]) throw new PasswordValidateException("should be a digit in password");
+        if (!result[1]) throw new PasswordValidateException("should be a upper case letter in password");
+        if (!result[2]) throw new PasswordValidateException("should be a lower case letter in password");
+        if (!result[3]) throw new PasswordValidateException("should be a special symbol in password");
 
     }
 }
